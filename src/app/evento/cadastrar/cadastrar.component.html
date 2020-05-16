@@ -1,1 +1,86 @@
-<p>cadastrar works!</p>
+<div class="card bg-light border-light">
+  <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Eventos</h1>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-lg-6">
+        <label for="nome">Nome:</label>
+        <input class="form-control" id="nome" name="nome" [(ngModel)]="evento.nome" />
+      </div>
+      <div class="form-group col-lg-6">
+        <label for="preco">Preço Ingresso:</label>
+        <input class="form-control" id="preco" name="preco" [(ngModel)]="evento.preco" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-12">
+        <label for="descricao">Descrição:</label>
+        <textarea class="form-control" name="descricao" id="descricao" [(ngModel)]="evento.descricao"></textarea>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-3">
+        <label for="dataInicio">Data Inicio:</label>
+        <input id="dataInicio" class="form-control" name="dataInicio" type="datetime-local" max="9999-12-31T23:59"
+          [(ngModel)]="evento.dataInicio">
+      </div>
+      <div class="form-group col-lg-3">
+        <label for="dataFim">Data Fim:</label>
+        <input id="dataFim" class="form-control" name="dataFim" type="datetime-local" max="9999-12-31T23:59"
+          [(ngModel)]="evento.dataFim">
+      </div>
+      <div class="form-group col-lg-3">
+        <label for="ingressosDisponiveis">Ingressos Disponíveis:</label>
+        <input id="ingressosDisponiveis" class="form-control" name="ingressosDisponiveis" type="number" min=0
+          [(ngModel)]="evento.quantidadeIngressos">
+      </div>
+      <div class="form-group col-lg-3">
+        <label for="casaDeShow">Casa De Show:</label>
+        <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="evento.casaDeShow">
+          <option value="null">Escolha...</option>
+          <option value=""></option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-lg-12">
+        <label for="">Imagem:</label>
+        <span style="color:red;" *ngIf="message">{{message}}</span>
+        <div class="custom-file">
+          <input #file accept='image/*' [(ngModel)]="evento.imagemEvento" (change)="preview(file.files)" type="file" name="file" class="custom-file-input" id="validatedCustomFile">
+          <label class="custom-file-label" for="validatedCustomFile">{{evento.imagemEvento}}</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+      </div>
+    </div>
+    <div class="ml-1 form-row">
+      <p *ngIf="evento.imagemEncode">Preview:</p>
+      <img class="mx-auto py-2" [src]="evento.imagemEncode" height="200" *ngIf="evento.imagemEncode">
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Cadastrar</button>
+  </form>
+</div>
+<hr />
+<div class="card bg-light border-light">
+  <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Eventos Cadastrados</h1>
+  <div class="table-responsive">
+    <table class="table table-striped table-inverse ">
+      <thead class="thead-inverse">
+        <tr>
+          <th style="border-right: 2px;">ID</th>
+          <th>Nome</th>
+          <th>Casa De Show</th>
+          <th>Ingressos Disponiveis</th>
+          <th>Ingressos Vendidos</th>
+          <th colspan="2">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row">1</td>
+          <td>Rock in São Paulo</td>
+          <td>Sampa Grills</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
