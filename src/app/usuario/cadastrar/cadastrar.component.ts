@@ -1,3 +1,4 @@
+import { Usuario } from './../../shared/models/usuario.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cadastrar.component.css']
 })
 export class CadastrarComponent implements OnInit {
+
+  usuario = new Usuario();
 
   constructor() { }
 

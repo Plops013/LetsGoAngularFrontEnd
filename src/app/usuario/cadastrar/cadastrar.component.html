@@ -1,8 +1,67 @@
 <div class="card bg-light border-light">
-  <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Casas de Show</h1>
+  <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Usuarios</h1>
   <form (ngSubmit)="onSubmit()">
-    <div class="form-row">
-      <div class="form-group"></div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-3">
+        <label>Nome:</label>
+        <input class="form-control" type="text" [(ngModel)]="usuario.nome" name="nome" />
+      </div>
+      <div class="form-group col-lg-3">
+        <label>Sobrenome:</label>
+        <input class="form-control" type="text" name="sobrenome" [(ngModel)]="usuario.sobrenome" />
+      </div>
     </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-6">
+        <label>Email:</label>
+        <input class="form-control" type="email" name="email" [(ngModel)]="usuario.email" />
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-3">
+        <label>Telefone:</label>
+        <input class="form-control" type="text" name="telefone" [(ngModel)]="usuario.telefone" />
+      </div>
+      <div class="form-group col-lg-3">
+        <label>Senha:</label>
+        <input class="form-control" type="password" name="senha" [(ngModel)]="usuario.senha" />
+      </div>
+    </div>
+    <p class="text-center mb-0">Eu sou:</p>
+    <div class="form-row mt-0 mb-0 pb-0 justify-content-center">
+      <div class="form-group  mb-2 pb-0 col-lg-6">
+        <div class="custom-control  mb-0 pb-0 custom-switch">
+          <label style="margin-left: 26%;" class="col-sm-3 mb-0 pb-0">Cliente</label>
+          <input type="checkbox" class="mb-0 pb-0 custom-control-input" id="customSwitch1">
+          <label class="custom-control-label mb-0 pb-0" for="customSwitch1">Organizador</label>
+        </div>
+      </div>
+    </div>
+    <button class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-6" type="submit">Cadastrar Usuario</button>
   </form>
+  <hr />
+  <div class="card table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Sobrenome</th>
+          <th scope="col">Data Nascimento</th>
+          <th scope="col">Email</th>
+          <th scope="col">Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Fabio</td>
+          <td>Lopes</td>
+          <td>18/04/1997</td>
+          <td>binhopecora@gmail.com</td>
+          <td>(13)98172-5946</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -1,3 +1,4 @@
+import { UsuarioModule } from './usuario/usuario.module';
 import { EventoModule } from './evento/evento.module';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,7 +19,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    EventoModule
+    EventoModule,
+    UsuarioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
