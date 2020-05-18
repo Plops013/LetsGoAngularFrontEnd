@@ -21,7 +21,7 @@ export class CadastrarComponent implements OnInit {
   deleteErro: string;
 
   constructor(private casaDeShowService: CasaDeShowService
-    , private eventoService: EventoService) { }
+            , private eventoService: EventoService) { }
 
   ngOnInit(): void {
     this.casaDeShowService.findAll().subscribe(
@@ -30,6 +30,7 @@ export class CadastrarComponent implements OnInit {
     this.eventoService.findAll().subscribe(
       data => this.eventos = data
     );
+    this.evento.id = 0;
   }
 
   setCasaId() {
@@ -49,7 +50,7 @@ export class CadastrarComponent implements OnInit {
       data => { this.refresh(); },
       error => {
       this.deleteErro += error.error.message;
-        setTimeout(() => { this.deleteErro = null; }, 5000);
+      setTimeout(() => { this.deleteErro = null; }, 5000);
       }
     );
   }
@@ -61,6 +62,7 @@ export class CadastrarComponent implements OnInit {
 
   onSubmit() {
     if (this.evento.id !== 0) {
+      this.setCasaId();
       this.edit();
     } else {
       this.setCasaId();
@@ -77,6 +79,12 @@ export class CadastrarComponent implements OnInit {
 
   refresh() {
     window.location.reload();
+  }
+
+  resetForm(){
+    this.evento = new Evento();
+    this.evento.id = 0;
+    this.idCasa = 0;
   }
 
   preview(files: any) {

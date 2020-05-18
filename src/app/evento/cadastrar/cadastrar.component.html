@@ -55,9 +55,13 @@
     </div>
     <div class="ml-1 form-row">
       <p *ngIf="evento.imagemEncoded">Preview:</p>
-      <img class="mx-auto py-2" [src]="evento.imagemEncoded" height="200" *ngIf="evento.imagemEncoded">
+      <img class="mx-auto py-2 rounded" [src]="evento.imagemEncoded" height="200" *ngIf="evento.imagemEncoded">
     </div>
-    <button type="submit" class="btn btn-success btn-block">Cadastrar</button>
+    <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;" *ngIf="evento.id === 0;else alterarEvento" type="submit" class="btn btn-success btn-block">Cadastrar</button>
+    <ng-template #alterarEvento>
+      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;"  type="submit" class="col-md-6 btn btn-success py-1">Alterar Evento</button>
+      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px darkred;" type="button" (click)="resetForm()" class="col-md-6 btn btn-danger py-1">Cancelar</button>
+    </ng-template>
   </form>
 </div>
 <hr />

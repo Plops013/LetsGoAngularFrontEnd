@@ -1,3 +1,4 @@
+import { PedidoModule } from './pedido/pedido.module';
 import { CasaDeShowModule } from './casa-de-show/casa-de-show.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { EventoModule } from './evento/evento.module';
@@ -15,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     EventoModule,
     UsuarioModule,
     HttpClientModule,
-    CasaDeShowModule
+    CasaDeShowModule,
+    PedidoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
