@@ -35,8 +35,8 @@
       </div>
       <div class="form-group col-lg-3">
         <label for="casaDeShow">Casa De Show:</label>
-        <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="evento.casaDeShow">
-          <option *ngFor="let casa of casas" [value]="casa.id">{{casa.nome}}</option>
+        <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="idCasa">
+          <option *ngFor="let casa of casas" value="{{casa.id}}">{{casa.nome}}</option>
         </select>
       </div>
     </div>
@@ -45,15 +45,15 @@
         <label for="">Imagem:</label>
         <span style="color:red;" *ngIf="message">{{message}}</span>
         <div class="custom-file">
-          <input #file accept='image/*' [(ngModel)]="evento.imagemEvento" (change)="preview(file.files)" type="file" name="file" class="custom-file-input" id="validatedCustomFile">
-          <label class="custom-file-label" for="validatedCustomFile">{{evento.imagemEvento}}</label>
+          <input #file accept='image/*' [(ngModel)]="imagePath" (change)="preview(file.files)" type="file" name="file" class="custom-file-input" id="validatedCustomFile">
+          <label class="custom-file-label" for="validatedCustomFile">{{imagePath}}</label>
           <div class="invalid-feedback">Example invalid custom file feedback</div>
         </div>
       </div>
     </div>
     <div class="ml-1 form-row">
-      <p *ngIf="evento.imagemEncode">Preview:</p>
-      <img class="mx-auto py-2" [src]="evento.imagemEncode" height="200" *ngIf="evento.imagemEncode">
+      <p *ngIf="evento.imagemEncoded">Preview:</p>
+      <img class="mx-auto py-2" [src]="evento.imagemEncoded" height="200" *ngIf="evento.imagemEncoded">
     </div>
     <button type="submit" class="btn btn-success btn-block">Cadastrar</button>
   </form>
@@ -81,7 +81,7 @@
           <td>{{evento.casaDeShow.nome}}</td>
           <td>{{evento.quantidadeIngressos}}</td>
           <td>{{evento.ingressosVendidos}}</td>
-          <td><img src="data:image/png;base64,{{evento.imagemEncode}}"/></td>
+          <td><img style="height: 40px;" src="{{evento.imagemEncoded}}"/></td>
           <td class="text-right"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;" (click)="editar()" class="btn btn-warning font-weight-bold py-0 px-1">Alterar</a></td>
           <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir()" class="btn btn-danger font-weight-bold py-0 px-1">Excluir</a></td>
         </tr>

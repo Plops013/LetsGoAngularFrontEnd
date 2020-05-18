@@ -10,8 +10,7 @@ export class Evento{
   preco: number;
   ingressosVendidos: number;
   casaDeShow: CasaDeShow;
-  imagemEncode: any;
+  imagemEncoded: string;
   dataString: string;
-  imagemEvento: Blob;
   dataInicioString: string;
 }

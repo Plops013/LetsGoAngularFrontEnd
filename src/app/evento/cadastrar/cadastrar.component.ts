@@ -31,6 +31,18 @@ export class CadastrarComponent implements OnInit {
     );
   }
 
+  setUsuarioId(){
+    const casaDeShow = new CasaDeShow();
+    casaDeShow.id = this.idCasa;
+    this.evento.casaDeShow = casaDeShow;
+  }
+
+  save(){
+    this.eventoService.save(this.evento).subscribe(
+      data => this.refresh()
+    );
+  }
+
   excluir(){
   }
 
@@ -38,9 +50,13 @@ export class CadastrarComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.evento);
+    this.setUsuarioId();
+    this.save();
   }
 
+  refresh() {
+    window.location.reload();
+  }
 
   preview(files: any) {
     if (files.length === 0) {
@@ -52,14 +68,11 @@ export class CadastrarComponent implements OnInit {
       this.message = 'Only images are supported.';
       return;
     }
-
     const reader = new FileReader();
-    this.imagePath = files;
     reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.evento.imagemEncode  = reader.result;
+    reader.onload = () => {
+      this.evento.imagemEncoded  = reader.result.toString();
     };
-    console.log(this.imagePath);
     console.log(this.evento);
   }
 }

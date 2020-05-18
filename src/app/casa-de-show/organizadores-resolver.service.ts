@@ -10,6 +10,6 @@ export class OrganizadoresResolverService implements Resolve<Usuario[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<Usuario[]>{
-    return this.usuarioService.findAll();
+    return this.usuarioService.findOrganizadores();
   }
 }
