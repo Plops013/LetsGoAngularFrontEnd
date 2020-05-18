@@ -21,4 +21,8 @@ export class EventoService {
   public save(evento: Evento): Observable<Evento>{
     return this.http.post<Evento>(this.url, evento);
   }
+
+  public delete(id: number): Observable<any>{
+    return this.http.delete(this.url + '/' + id);
+  }
 }

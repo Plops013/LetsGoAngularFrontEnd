@@ -1,3 +1,5 @@
+import { Evento } from './../shared/models/evento.model';
+import { EventoService } from './../shared/services/evento.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,11 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private eventoService: EventoService) { }
 
   array = [1, 2, 3, 4, 5, 6, 7];
+  eventos: Evento[];
 
   ngOnInit(): void {
+    this.eventoService.findAll().subscribe(
+      data => this.eventos = data
+    );
   }
 
 }

@@ -79,7 +79,7 @@ export class CadastrarComponent implements OnInit {
   }
 
   verificaPapelAlterar(){
-    if(this.usuario.papel.id === 2){
+    if (this.usuario.papel.id === 2){
       this.switchPapel = true;
     } else {
       this.switchPapel = false;

@@ -59,6 +59,9 @@
   </form>
 </div>
 <hr />
+<div class="alert alert-danger text-center" *ngIf="deleteErro" role="alert">
+  {{deleteErro}}!
+</div>
 <div class="card bg-light border-light">
   <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Eventos Cadastrados</h1>
   <div class="table-responsive">
@@ -83,7 +86,7 @@
           <td>{{evento.ingressosVendidos}}</td>
           <td><img style="height: 40px;" src="{{evento.imagemEncoded}}"/></td>
           <td class="text-right"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;" (click)="editar()" class="btn btn-warning font-weight-bold py-0 px-1">Alterar</a></td>
-          <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir()" class="btn btn-danger font-weight-bold py-0 px-1">Excluir</a></td>
+          <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir(evento.id)" class="btn btn-danger font-weight-bold py-0 px-1">Excluir</a></td>
         </tr>
       </tbody>
     </table>

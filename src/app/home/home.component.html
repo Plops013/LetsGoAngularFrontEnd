@@ -3,14 +3,14 @@
 <h3 style="text-shadow: 2px 2px gainsboro; color: palegreen;" class="text-center mt-0 pt-0 ">Aqui você encontra os melhores Eventos</h3>
 </div>
 <div class="row">
-  <div *ngFor="let item of array" class="px-2 col-lg-4 mb-3">
+  <div *ngFor="let evento of eventos" class="px-2 col-lg-4 mb-3">
     <div class="card" style="background-color: #fff; box-shadow: 2px 2px 8px gainsboro;">
-      <img class="card-img-top w-100" style="height: 125px;" src="https://chillibeans.vteximg.com.br/arquivos/ids/443534/rrbanner1.jpg?v=637025879427100000" />
+      <img class="card-img-top w-100" style="height: 125px;" src="{{evento.imagemEncoded}}" />
       <div class=" mx-1 px-3">
-      <h4 class="text-center mt-2 mb-0"><a style="color: greenyellow;" href="#"> Rock in São Paulo </a></h4>
+      <h4 class="text-center mt-2 mb-0"><a style="color: greenyellow;" href="#">{{evento.nome}}</a></h4>
       <hr class="my-1 py-0 border-success"/>
-      <p class="text-center my-0"> <strong>São Paulo - SP</strong> </p>
-      <p class="text-center mb-2"> 18/04/2021 </p>
+      <p class="text-center my-0"> <strong>{{evento.casaDeShow.cidade}} - {{evento.casaDeShow.estado}}</strong> </p>
+      <p class="text-center mb-2"> {{evento.dataString}} </p>
     </div>
     </div>
   </div>

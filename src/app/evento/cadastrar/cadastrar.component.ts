@@ -18,6 +18,7 @@ export class CadastrarComponent implements OnInit {
   casas: CasaDeShow[];
   eventos: Evento[];
   idCasa = 0;
+  deleteErro: string;
 
   constructor(private casaDeShowService: CasaDeShowService
             , private eventoService: EventoService) { }
@@ -43,7 +44,13 @@ export class CadastrarComponent implements OnInit {
     );
   }
 
-  excluir(){
+  excluir(id: number){
+    this.eventoService.delete(id).subscribe(
+      data => { this.refresh(); },
+      error => { this.deleteErro = error.error.message;
+                 setTimeout( () => {this.deleteErro = null; } , 3000); }
+    );
+
   }
 
   editar(){
