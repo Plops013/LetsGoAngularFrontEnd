@@ -1,0 +1,16 @@
+<div class="row">
+<img src="{{evento.imagemEncoded}}" style="height: 300px; border-radius: 5px;" class="rounded text-center mx-auto" />
+</div>
+<hr>
+<div class="row">
+  <h2 class="text-center col-lg-12" style="text-shadow: 2px 2px gainsboro;">{{evento.nome}}</h2>
+</div>
+  <h3 style="text-shadow: 2px 2px gainsboro;" >Descrição:</h3>
+  <p class="bg-white rounded">{{evento.descricao}}</p>
+  <h3 style="text-shadow: 2px 2px gainsboro;">Data:</h3>
+  <p class="bg-white rounded">{{evento.dataString}}</p>
+  <h3 style="text-shadow: 2px 2px gainsboro;">Ingressos Disponiveis:</h3>
+  <p class="bg-white">{{evento.quantidadeIngressos}}</p>
+  <h3 style="text-shadow: 2px 2px gainsboro;">Preço:</h3>
+  <p class="bg-white">{{evento.preco}}</p>
+  <a style="box-shadow: 4px 4px gainsboro;" href='/' class="btn btn-outline-success btn-block">Comprar Ingressos</a>

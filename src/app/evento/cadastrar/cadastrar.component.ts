@@ -21,7 +21,7 @@ export class CadastrarComponent implements OnInit {
   deleteErro: string;
 
   constructor(private casaDeShowService: CasaDeShowService
-            , private eventoService: EventoService) { }
+    , private eventoService: EventoService) { }
 
   ngOnInit(): void {
     this.casaDeShowService.findAll().subscribe(
@@ -32,33 +32,47 @@ export class CadastrarComponent implements OnInit {
     );
   }
 
-  setUsuarioId(){
+  setCasaId() {
     const casaDeShow = new CasaDeShow();
     casaDeShow.id = this.idCasa;
     this.evento.casaDeShow = casaDeShow;
   }
 
-  save(){
+  save() {
     this.eventoService.save(this.evento).subscribe(
       data => this.refresh()
     );
   }
 
-  excluir(id: number){
+  excluir(id: number) {
     this.eventoService.delete(id).subscribe(
       data => { this.refresh(); },
-      error => { this.deleteErro = error.error.message;
-                 setTimeout( () => {this.deleteErro = null; } , 3000); }
+      error => {
+      this.deleteErro += error.error.message;
+        setTimeout(() => { this.deleteErro = null; }, 5000);
+      }
     );
-
   }
 
-  editar(){
+  editar(editEvento: Evento) {
+    this.evento = editEvento;
+    this.idCasa = editEvento.casaDeShow.id;
   }
 
   onSubmit() {
-    this.setUsuarioId();
-    this.save();
+    if (this.evento.id !== 0) {
+      this.edit();
+    } else {
+      this.setCasaId();
+      this.save();
+    }
+  }
+
+  edit(){
+    this.eventoService.update(this.evento).subscribe( data => {
+      console.log(this.evento);
+      this.refresh();
+    });
   }
 
   refresh() {
@@ -78,7 +92,7 @@ export class CadastrarComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
-      this.evento.imagemEncoded  = reader.result.toString();
+      this.evento.imagemEncoded = reader.result.toString();
     };
     console.log(this.evento);
   }

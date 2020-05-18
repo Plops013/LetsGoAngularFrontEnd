@@ -18,11 +18,19 @@ export class EventoService {
     return this.http.get<Evento[]>(this.url);
   }
 
+  public findById(id: number): Observable<Evento>{
+    return this.http.get<Evento>(this.url + '/' + id);
+  }
+
   public save(evento: Evento): Observable<Evento>{
     return this.http.post<Evento>(this.url, evento);
   }
 
   public delete(id: number): Observable<any>{
     return this.http.delete(this.url + '/' + id);
+  }
+
+  public update(evento: Evento): Observable<Evento>{
+    return this.http.put<Evento>(this.url, evento);
   }
 }
