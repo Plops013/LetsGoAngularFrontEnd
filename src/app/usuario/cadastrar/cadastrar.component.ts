@@ -1,5 +1,9 @@
+import { CasaDeShow } from './../../shared/models/casa-de-show.model';
+import { Papel } from './../../shared/models/papel.model';
+import { UsuarioService } from './../../shared/services/usuario.service';
 import { Usuario } from './../../shared/models/usuario.model';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar',
@@ -9,13 +13,77 @@ import { Component, OnInit } from '@angular/core';
 export class CadastrarComponent implements OnInit {
 
   usuario = new Usuario();
+  usuarios: Usuario[];
+  switchPapel: boolean;
+  erroMessage: string;
+  submitMessage: string;
 
-  constructor() { }
+  constructor(private usuarioService: UsuarioService, private router: Router) { }
 
   ngOnInit(): void {
+    this.usuario.id = 0;
+    this.erroMessage = null;
+    this.switchPapel = false;
+    this.usuarioService.findAll().subscribe(
+      data => { this.usuarios = data; }
+    );
   }
 
-  onSubmit(){
+  setPapel() {
+    if (this.switchPapel === true) {
+      this.usuario.papel = new Papel(2, 'Organizador');
+    } else {
+      this.usuario.papel = new Papel(1, 'Cliente');
+    }
+  }
+
+  onSubmit() {
+    this.setPapel();
+    if (this.usuario.email === ''){
+      this.submitMessage = 'Email é obrigatório meu bom!';
+    } else {
+    this.usuarioService.save(this.usuario).subscribe(
+      data => {
+        console.log(data);
+        this.refresh();
+      },
+      error => {
+        this.submitMessage = error.error.message;
+      }
+    );
+  }
+  }
+
+  excluir(id: number) {
+      this.usuarioService.delete(id).subscribe(
+        data => { this.refresh();
+                  alert('Usuario excluido com sucesso!'); },
+        error => { this.erroMessage = error.error.message; });
+  }
+
+
+
+  editar(u: Usuario){
+    this.usuario = u;
+    this.verificaPapelAlterar();
+  }
+
+  limpaForm(){
+    this.usuario = new Usuario();
+    this.switchPapel = false;
+    this.usuario.id = 0;
+  }
+
+  refresh() {
+    window.location.reload();
+  }
+
+  verificaPapelAlterar(){
+    if(this.usuario.papel.id === 2){
+      this.switchPapel = true;
+    } else {
+      this.switchPapel = false;
+    }
   }
 
 }

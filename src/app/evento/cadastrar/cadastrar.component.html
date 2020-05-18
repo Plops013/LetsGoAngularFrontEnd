@@ -36,8 +36,7 @@
       <div class="form-group col-lg-3">
         <label for="casaDeShow">Casa De Show:</label>
         <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="evento.casaDeShow">
-          <option value="null">Escolha...</option>
-          <option value=""></option>
+          <option *ngFor="let casa of casas" [value]="casa.id">{{casa.nome}}</option>
         </select>
       </div>
     </div>
@@ -71,14 +70,20 @@
           <th>Casa De Show</th>
           <th>Ingressos Disponiveis</th>
           <th>Ingressos Vendidos</th>
+          <th>Imagem</th>
           <th colspan="2">Opções</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td scope="row">1</td>
-          <td>Rock in São Paulo</td>
-          <td>Sampa Grills</td>
+        <tr *ngFor="let evento of eventos">
+          <td scope="row">{{evento.id}}</td>
+          <td>{{evento.nome}}</td>
+          <td>{{evento.casaDeShow.nome}}</td>
+          <td>{{evento.quantidadeIngressos}}</td>
+          <td>{{evento.ingressosVendidos}}</td>
+          <td><img src="data:image/png;base64,{{evento.imagemEncode}}"/></td>
+          <td class="text-right"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;" (click)="editar()" class="btn btn-warning font-weight-bold py-0 px-1">Alterar</a></td>
+          <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir()" class="btn btn-danger font-weight-bold py-0 px-1">Excluir</a></td>
         </tr>
       </tbody>
     </table>

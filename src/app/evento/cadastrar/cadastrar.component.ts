@@ -1,3 +1,6 @@
+import { EventoService } from './../../shared/services/evento.service';
+import { CasaDeShowService } from './../../shared/services/casa-de-show.service';
+import { CasaDeShow } from './../../shared/models/casa-de-show.model';
 import { Evento } from './../../shared/models/evento.model';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,10 +15,26 @@ export class CadastrarComponent implements OnInit {
   message: string;
   evento = new Evento();
   imagemArray = new Int8Array();
+  casas: CasaDeShow[];
+  eventos: Evento[];
+  idCasa = 0;
 
-  constructor() { }
+  constructor(private casaDeShowService: CasaDeShowService
+            , private eventoService: EventoService) { }
 
   ngOnInit(): void {
+    this.casaDeShowService.findAll().subscribe(
+      data => this.casas = data
+    );
+    this.eventoService.findAll().subscribe(
+      data => this.eventos = data
+    );
+  }
+
+  excluir(){
+  }
+
+  editar(){
   }
 
   onSubmit() {

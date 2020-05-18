@@ -1,30 +1,40 @@
 <div class="card bg-light border-light">
   <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Usuarios</h1>
   <form (ngSubmit)="onSubmit()">
+    <input type="hidden" name="id" [(ngModel)]="usuario.id" />
+    <div class="alert alert-danger text-center" *ngIf="submitMessage" role="alert">
+      {{submitMessage}}!
+    </div>
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-3">
         <label>Nome:</label>
-        <input class="form-control" type="text" [(ngModel)]="usuario.nome" name="nome" />
+        <input class="form-control" type="text" [(ngModel)]="usuario.nome" name="nome" required/>
       </div>
       <div class="form-group col-lg-3">
         <label>Sobrenome:</label>
-        <input class="form-control" type="text" name="sobrenome" [(ngModel)]="usuario.sobrenome" />
+        <input class="form-control" type="text" name="sobrenome" [(ngModel)]="usuario.sobrenome" required/>
       </div>
     </div>
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-6">
         <label>Email:</label>
-        <input class="form-control" type="email" name="email" [(ngModel)]="usuario.email" />
+        <input class="form-control" type="email" name="email" [(ngModel)]="usuario.email" required/>
       </div>
     </div>
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-3">
         <label>Telefone:</label>
-        <input class="form-control" type="text" name="telefone" [(ngModel)]="usuario.telefone" />
+        <input class="form-control" type="text" name="telefone" [(ngModel)]="usuario.telefone" required/>
       </div>
       <div class="form-group col-lg-3">
         <label>Senha:</label>
-        <input class="form-control" type="password" name="senha" [(ngModel)]="usuario.senha" />
+        <input class="form-control" type="password" name="senha" [(ngModel)]="usuario.senha" required/>
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-6">
+        <label>Data De Nascimento:</label>
+        <input type="date" class="form-control" name="dataNascimento" [(ngModel)]="usuario.dataNascimento"  max="9999-12-31T23:59" required>
       </div>
     </div>
     <p class="text-center mb-0">Eu sou:</p>
@@ -32,15 +42,23 @@
       <div class="form-group  mb-2 pb-0 col-lg-6">
         <div class="custom-control  mb-0 pb-0 custom-switch">
           <label style="margin-left: 26%;" class="col-sm-3 mb-0 pb-0">Cliente</label>
-          <input type="checkbox" class="mb-0 pb-0 custom-control-input" id="customSwitch1">
+          <input type="checkbox" [(ngModel)]="switchPapel" name="switchPapel" class="mb-0 pb-0 custom-control-input" id="customSwitch1">
           <label class="custom-control-label mb-0 pb-0" for="customSwitch1">Organizador</label>
         </div>
       </div>
     </div>
-    <button class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-6" type="submit">Cadastrar Usuario</button>
+
+    <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;" class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-6" *ngIf="usuario.id === 0; else alterar" type="submit">Cadastrar Usuario</button>
+    <ng-template #alterar>
+      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;" class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-3" type="submit">Alterar Usuario</button>
+      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px darkred;" class="btn btn-danger mt-0 py-1 col-lg-3" (click)="limpaForm()" type="button">Cancelar</button>
+    </ng-template>
   </form>
   <hr />
   <div class="card table-responsive">
+    <div class="alert alert-danger text-center" *ngIf="erroMessage" role="alert">
+      {{erroMessage}}!
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -50,16 +68,21 @@
           <th scope="col">Data Nascimento</th>
           <th scope="col">Email</th>
           <th scope="col">Telefone</th>
+          <th scope="col">Cargo</th>
+          <th scope="col" colspan="2" class="text-center">Opções</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Fabio</td>
-          <td>Lopes</td>
-          <td>18/04/1997</td>
-          <td>binhopecora@gmail.com</td>
-          <td>(13)98172-5946</td>
+        <tr *ngFor="let u of usuarios">
+          <th scope="row">{{u.id}}</th>
+          <td>{{u.nome}}</td>
+          <td>{{u.sobrenome}}</td>
+          <td>{{u.dataString}}</td>
+          <td>{{u.email}}</td>
+          <td>{{u.telefone}}</td>
+          <td>{{u.papel.nome}}</td>
+          <td class="text-right"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;" (click)="editar(u);" class="btn font-weight-bold btn-warning py-0 px-1">Alterar</a></td>
+          <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir(u.id)" class="btn font-weight-bold btn-danger py-0 px-1">Excluir</a></td>
         </tr>
       </tbody>
     </table>

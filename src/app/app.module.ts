@@ -1,3 +1,4 @@
+import { CasaDeShowModule } from './casa-de-show/casa-de-show.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { EventoModule } from './evento/evento.module';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     AppRoutingModule,
     FormsModule,
     EventoModule,
-    UsuarioModule
+    UsuarioModule,
+    HttpClientModule,
+    CasaDeShowModule
   ],
   providers: [],
   bootstrap: [AppComponent]

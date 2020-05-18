@@ -11,4 +11,5 @@ export class Usuario {
   dataNascimento: Date;
   papel: Papel;
   casaDeShow: Array<CasaDeShow>;
+  dataString: string;
 }

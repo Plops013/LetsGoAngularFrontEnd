@@ -5,11 +5,10 @@ export class CasaDeShow{
   nome: string;
   cep: string;
   endereco: string;
+  estado: string;
   numero: string;
   cidade: string;
   capacidade: number;
-  imagemCasaDeShow: Int8Array;
-  imagemEncoded: string;
-  usuario: Usuario;
+  usuario = new Usuario();
   eventos: Array<Evento>;
 }

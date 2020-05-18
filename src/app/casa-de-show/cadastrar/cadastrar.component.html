@@ -1,8 +1,98 @@
 <div class="card bg-light border-light">
   <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Casas de Show</h1>
   <form (ngSubmit)="onSubmit()">
-    <div class="form-row">
-      <div class="form-group"></div>
+    <div class="alert alert-danger text-center" *ngIf="submitErro" role="alert">
+      {{submitErro}}!
+    </div>
+    <input type="hidden" [(ngModel)]="casaDeShow.id" name="id" />
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-6">
+        <label>Nome:</label>
+        <input class="form-control" name="nome" [(ngModel)]="casaDeShow.nome" />
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-2">
+        <label>CEP:</label>
+        <input class="form-control" (blur)="viaCep(casaDeShow.cep)" [(ngModel)]="casaDeShow.cep" type="text" name="cep" id="cep">
+      </div>
+      <div class="form-group col-lg-4">
+        <label>Endereço:</label>
+        <input disabled class="form-control" name="endereco" id="endereco" [(ngModel)]="casaDeShow.endereco" />
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-2">
+        <label>Numero:</label>
+        <input class="form-control" name="numero" id="numero" [(ngModel)]="casaDeShow.numero" />
+      </div>
+      <div class="form-group col-lg-3">
+        <label>Cidade</label>
+        <input disabled class="form-control" name="cidade" id="cidade" [(ngModel)]="casaDeShow.cidade" />
+      </div>
+      <div class="form-group col-lg-1">
+        <label>Estado:</label>
+        <input disabled class="form-control" name="estado" id="estado" [(ngModel)]="casaDeShow.estado" maxlength="2" />
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-3">
+        <label>Capacidade:</label>
+        <input class="form-control" name="capacidade" id="capacidade" [(ngModel)]="casaDeShow.capacidade" />
+      </div>
+      <div class="form-group col-lg-3">
+        <label>Organizador: </label>
+        <select [(ngModel)]="idUsuario" name="usuario" class="form-control">
+          <option *ngFor="let organizador of organizadores" [value]="organizador.id">{{organizador.nome}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col-lg-6">
+        <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;" *ngIf="casaDeShow.id === 0; else alterarButton" type="submit" class="btn btn-success btn-block py-1">Cadastrar Casa De Show</button>
+        <ng-template #alterarButton>
+          <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;"  type="submit" class="col-md-6 btn btn-success py-1">Alterar Casa De Show</button>
+          <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px darkred;" type="button" (click)="resetForm()" class="col-md-6 btn btn-danger py-1">Cancelar</button>
+        </ng-template>
+      </div>
     </div>
   </form>
+  <hr/>
+  <h2 class="text-center mb-3" style="text-shadow: 2px 2px gainsboro;">Casas de Show</h2>
+  <div class="alert alert-danger text-center" *ngIf="erroMessage" role="alert">
+    {{erroMessage}}!
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Cep</th>
+          <th scope="col">Endereço</th>
+          <th scope="col">Numero</th>
+          <th scope="col">Cidade</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Capacidade</th>
+          <th scope="col">Responsavel</th>
+          <th class="text-center" scope="col" colspan="2">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let casa of casas">
+          <th scope="row">{{casa.id}}</th>
+          <td>{{casa.nome}}</td>
+          <td>{{casa.cep}}</td>
+          <td>{{casa.endereco}}</td>
+          <td>{{casa.numero}}</td>
+          <td>{{casa.cidade}}</td>
+          <td>{{casa.estado}}</td>
+          <td>{{casa.capacidade}}</td>
+          <td>{{casa.usuario.nome}}</td>
+          <td class="text-right"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;" (click)="editar(casa)" class="btn btn-warning font-weight-bold py-0 px-1">Alterar</a></td>
+          <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir(casa.id)" class="btn btn-danger font-weight-bold py-0 px-1">Excluir</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
