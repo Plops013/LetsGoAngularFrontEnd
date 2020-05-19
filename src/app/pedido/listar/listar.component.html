@@ -1,1 +1,17 @@
-<p>listar works!</p>
+<div *ngFor="let pedido of pedidos" class="card mb-3" style="box-shadow: 2px 2px gainsboro;">
+  <div class="row">
+    <div class="col-sm-4" style="border-right: 3px solid gainsboro;">
+      <h5 class="text-center  mt-3 pt-2 mb-0">Pedido: #{{pedido.id}}</h5>
+      <p class="text-center my-0">Data Compra: {{pedido.dataString}}</p>
+      <hr class="ml-3 mr-2 my-1"/>
+      <h5 class="text-center mb-0">Comprador: {{pedido.usuario.nome}}</h5>
+      <p class="text-center mt-0 mb-3"> Id: {{pedido.usuario.id}} | Tel: {{pedido.usuario.telefone}}</p>
+    </div>
+    <div class="col-sm-8">
+      <h5 class="text-center mt-3 pt-2 mb-0">Evento: {{pedido.evento.nome}}</h5>
+      <p class="text-center my-0">Data: {{pedido.evento.dataString}}</p>
+      <p class="text-center my-0">Ingressos: {{pedido.quantidadeIngressos}}</p>
+      <p class="text-center mt-0 mb-3 font-weight-bold text-success">Total: R$:{{pedido.total}}</p>
+    </div>
+  </div>
+</div>

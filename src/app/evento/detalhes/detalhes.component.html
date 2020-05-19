@@ -20,15 +20,18 @@
   </ng-template>
   <form (ngSubmit)="onSubmit()" #form="ngForm">
     <h3 style="text-shadow: 2px 2px gainsboro;">Quantidade:</h3>
-    <input style="font-weight: bolder; font-size: 26px; border: 2px solid gainsboro;" type="number" max="4" min="1"
-      value="1" class="form-control text-center mx-auto mb-2 py-0 col-lg-1">
+    <input [(ngModel)]="pedido.quantidadeIngressos" style="font-weight: bolder; font-size: 26px; border: 2px solid gainsboro;" type="number" max="4" min="1"
+     name="quantidadeIngressos" value="1" class="form-control text-center mx-auto mb-2 py-0 col-lg-1">
     <h3 style="text-shadow: 2px 2px gainsboro;">Usuario:</h3>
     <select [(ngModel)]="idUsuario" name="idUsuario"
       style="font-weight: bolder; text-align: center; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"
       class="form-control col-lg-2 text-center mx-auto mb-2">
-      <option *ngFor="let usuario of usuarios" value="usuario.id">{{usuario.nome}}</option>
+      <option *ngFor="let usuario of usuarios" value="{{usuario.id}}">{{usuario.nome}}</option>
     </select>
-    <a style="box-shadow: 4px 4px gainsboro;font-weight: bold;" href='/'
-      class="mb-4 btn btn-outline-success btn-block">Comprar Ingressos</a>
+    <div class="alert alert-danger text-center" *ngIf="mensagemErro" role="alert">
+      {{mensagemErro}}!
+    </div>
+    <button type="submit" style="box-shadow: 4px 4px gainsboro;font-weight: bold;"
+      class="mb-4 btn btn-outline-success btn-block">Comprar Ingressos</button>
   </form>
 </div>
