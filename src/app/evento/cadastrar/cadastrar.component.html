@@ -1,42 +1,42 @@
 <div class="card bg-light border-light">
   <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Eventos</h1>
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #eventoForm="ngForm">
     <input type="hidden" [(ngModel)]="evento.id" name="id" />
     <div class="form-row">
       <div class="form-group col-lg-6">
         <label for="nome">Nome:</label>
-        <input class="form-control" id="nome" name="nome" [(ngModel)]="evento.nome" />
+        <input class="form-control" id="nome" name="nome" [(ngModel)]="evento.nome" #nome="ngModel" required/>
       </div>
       <div class="form-group col-lg-6">
         <label for="preco">Preço Ingresso:</label>
-        <input class="form-control" id="preco" name="preco" [(ngModel)]="evento.preco" />
+        <input type="number"  class="form-control" id="preco" name="preco" [(ngModel)]="evento.preco" #preco required/>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-lg-12">
         <label for="descricao">Descrição:</label>
-        <textarea class="form-control" name="descricao" id="descricao" [(ngModel)]="evento.descricao"></textarea>
+        <textarea class="form-control" name="descricao" id="descricao" [(ngModel)]="evento.descricao" required minlength="100" #descricao="ngModel"></textarea>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-lg-3">
         <label for="dataInicio">Data Inicio:</label>
         <input id="dataInicio" class="form-control" name="dataInicio" type="datetime-local" max="9999-12-31T23:59"
-          [(ngModel)]="evento.dataInicio">
+          [(ngModel)]="evento.dataInicio" required #dataInicio="ngModel">
       </div>
       <div class="form-group col-lg-3">
         <label for="dataFim">Data Fim:</label>
         <input id="dataFim" class="form-control" name="dataFim" type="datetime-local" max="9999-12-31T23:59"
-          [(ngModel)]="evento.dataFim">
+          [(ngModel)]="evento.dataFim" required #dataFim="ngModel">
       </div>
       <div class="form-group col-lg-3">
         <label for="ingressosDisponiveis">Ingressos Disponíveis:</label>
         <input id="ingressosDisponiveis" class="form-control" name="ingressosDisponiveis" type="number" min=0
-          [(ngModel)]="evento.quantidadeIngressos">
+          [(ngModel)]="evento.quantidadeIngressos" required #quantidadeIngresso="ngModel">
       </div>
       <div class="form-group col-lg-3">
         <label for="casaDeShow">Casa De Show:</label>
-        <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="idCasa">
+        <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="idCasa" required #casaDeShow="ngModel">
           <option *ngFor="let casa of casas" value="{{casa.id}}">{{casa.nome}}</option>
         </select>
       </div>
@@ -47,7 +47,7 @@
         <span style="color:red;" *ngIf="message">{{message}}</span>
         <div class="custom-file">
           <input #file accept='image/*' [(ngModel)]="imagePath" (change)="preview(file.files)" type="file" name="file"
-            class="custom-file-input" id="validatedCustomFile">
+            class="custom-file-input" id="validatedCustomFile" required>
           <label class="custom-file-label" for="validatedCustomFile">{{imagePath}}</label>
           <div class="invalid-feedback">Example invalid custom file feedback</div>
         </div>
