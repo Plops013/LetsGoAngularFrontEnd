@@ -18,6 +18,14 @@
       <div class="form-group col-lg-2">
         <label>CEP:</label>
         <input class="form-control" (blur)="viaCep(casaDeShow.cep)" [(ngModel)]="casaDeShow.cep" type="text" name="cep" id="cep" required #cep="ngModel">
+        <div name="cepValidation" *ngIf="cep.invalid && (cep.dirty || cep.touched)">
+          <p class="py-0 my-0 small text-danger text-center" *ngIf="cep.errors.required">
+            CEP é obrigatório!
+          </p>
+        </div>
+        <p class="small text-danger text-center" *ngIf="erroCep">
+          Digite um cep valido.
+        </p>
       </div>
       <div class="form-group col-lg-4">
         <label>Endereço:</label>
@@ -28,6 +36,9 @@
       <div class="form-group col-lg-2">
         <label>Numero:</label>
         <input class="form-control" name="numero" id="numero" [(ngModel)]="casaDeShow.numero" required #numero="ngModel" />
+        <div *ngIf="numero.invalid && (numero.dirty || numero.touched)">
+          <p class="py-0 my-0 small text-center text-danger">Número é obrigatório!</p>
+        </div>
       </div>
       <div class="form-group col-lg-3">
         <label>Cidade</label>
@@ -41,7 +52,10 @@
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-3">
         <label>Capacidade:</label>
-        <input type="number" class="form-control" name="capacidade" id="capacidade" [(ngModel)]="casaDeShow.capacidade" required #capacidade="ngModel" />
+        <input type="number" class="form-control" name="capacidade" id="capacidade" [(ngModel)]="casaDeShow.capacidade" required min="5" #capacidade="ngModel" />
+        <div *ngIf="capacidade.invalid && (capacidade.dirty || capacidade.touched)">
+          <p class="text-center text-danger small py-0 my-0" *ngIf="capacidade.errors.required">Capacidade é obrigatório</p>
+        </div>
       </div>
       <div class="form-group col-lg-3">
         <label>Organizador: </label>

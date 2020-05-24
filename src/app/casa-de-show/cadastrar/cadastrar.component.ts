@@ -1,10 +1,10 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CasaDeShowService } from './../../shared/services/casa-de-show.service';
 import { Usuario } from './../../shared/models/usuario.model';
 import { UsuarioService } from './../../shared/services/usuario.service';
 import { CasaDeShow } from './../../shared/models/casa-de-show.model';
 import { Component, OnInit } from '@angular/core';
-import { NgxViacepService } from '@brunoc/ngx-viacep';
+import { NgxViacepService, ErroCep } from '@brunoc/ngx-viacep';
 
 @Component({
   selector: 'app-cadastrar',
@@ -19,6 +19,7 @@ export class CadastrarComponent implements OnInit {
   submitErro: string;
   erroMessage: string;
   idUsuario: number;
+  erroCep: string;
 
   constructor(private usuarioService: UsuarioService
             , private casaDeShowService: CasaDeShowService
@@ -77,10 +78,14 @@ export class CadastrarComponent implements OnInit {
 
   viaCep(cep: string){
     this.cepService.buscarPorCep(cep).then( ( endereco: any ) => {
+      this.erroCep = '';
       this.casaDeShow.endereco = endereco.logradouro;
       this.casaDeShow.cidade = endereco.localidade;
       this.casaDeShow.estado = endereco.uf;
-    });
+    }).catch( (error: ErroCep) => {
+      this.erroCep = error.message;
+      this.casaDeShow.cep = '';
+     });
   }
 
 }
