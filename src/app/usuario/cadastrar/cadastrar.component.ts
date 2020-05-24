@@ -1,9 +1,9 @@
-import { CasaDeShow } from './../../shared/models/casa-de-show.model';
 import { Papel } from './../../shared/models/papel.model';
 import { UsuarioService } from './../../shared/services/usuario.service';
 import { Usuario } from './../../shared/models/usuario.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, enableProdMode } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastrar',
@@ -17,6 +17,7 @@ export class CadastrarComponent implements OnInit {
   switchPapel: boolean;
   erroMessage: string;
   submitMessage: string;
+  usuarioForm: FormGroup;
 
   constructor(private usuarioService: UsuarioService, private router: Router) { }
 
@@ -29,6 +30,11 @@ export class CadastrarComponent implements OnInit {
     );
   }
 
+  editar(u: Usuario) {
+    this.usuario = u;
+    this.verificaPapelAlterar();
+  }
+
   setPapel() {
     if (this.switchPapel === true) {
       this.usuario.papel = new Papel(2, 'Organizador');
@@ -39,47 +45,44 @@ export class CadastrarComponent implements OnInit {
 
   onSubmit() {
     this.setPapel();
-    if (this.usuario.email === ''){
+    console.log(this.usuario);
+    if (this.usuario.email === '') {
       this.submitMessage = 'Email é obrigatório meu bom!';
     } else {
-    this.usuarioService.save(this.usuario).subscribe(
-      data => {
-        console.log(data);
-        this.refresh();
-      },
-      error => {
-        this.submitMessage = error.error.message;
-      }
-    );
-  }
+      this.usuarioService.save(this.usuario).subscribe(
+        data => {
+          console.log(data);
+          this.refresh();
+        },
+        error => {
+          this.submitMessage = error.error.message;
+        }
+      );
+    }
   }
 
   excluir(id: number) {
-      this.usuarioService.delete(id).subscribe(
-        data => { this.refresh();
-                  alert('Usuario excluido com sucesso!'); },
-        error => { this.erroMessage = error.error.message; });
+    this.usuarioService.delete(id).subscribe(
+      data => {
+        this.refresh();
+        alert('Usuario excluido com sucesso!');
+      },
+      error => { this.erroMessage = error.error.message; });
   }
 
-
-
-  editar(u: Usuario){
-    this.usuario = u;
-    this.verificaPapelAlterar();
-  }
-
-  limpaForm(){
+  limpaForm() {
     this.usuario = new Usuario();
     this.switchPapel = false;
     this.usuario.id = 0;
+    this.usuarioForm.markAsUntouched();
   }
 
   refresh() {
     window.location.reload();
   }
 
-  verificaPapelAlterar(){
-    if (this.usuario.papel.id === 2){
+  verificaPapelAlterar() {
+    if (this.usuario.papel.id === 2) {
       this.switchPapel = true;
     } else {
       this.switchPapel = false;

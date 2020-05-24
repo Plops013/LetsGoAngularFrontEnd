@@ -1,40 +1,85 @@
 <div class="card bg-light border-light">
   <h1 class="display-4 text-center" style="text-shadow: 2px 2px gainsboro;">Gerenciar Usuarios</h1>
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
     <input type="hidden" name="id" [(ngModel)]="usuario.id" />
     <div class="alert alert-danger text-center" *ngIf="submitMessage" role="alert">
       {{submitMessage}}!
     </div>
     <div class="form-row justify-content-center">
+
       <div class="form-group col-lg-3">
         <label>Nome:</label>
-        <input class="form-control" type="text" [(ngModel)]="usuario.nome" name="nome" required/>
+        <input [ngModelOptions]="{ updateOn: 'blur' }" class="form-control" [(ngModel)]="usuario.nome" type="text" name="nome" required minlength="4"
+          #nome="ngModel" />
+        <div class="text-danger text-center" *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+          <div class="small" *ngIf="nome.errors.required">
+            Nome é obrigatório
+          </div>
+          <div class="small" *ngIf="nome.errors.minlength">
+            Nome deve ter no minimo 3 caracteres
+          </div>
+        </div>
       </div>
+
       <div class="form-group col-lg-3">
         <label>Sobrenome:</label>
-        <input class="form-control" type="text" name="sobrenome" [(ngModel)]="usuario.sobrenome" required/>
+        <input class="form-control" [(ngModel)]="usuario.sobrenome" type="text" name="sobrenome" required minlength="4"
+          #sobrenome="ngModel" />
+        <div class="text-danger text-center" *ngIf="sobrenome.invalid  && sobrenome.touched">
+          <div class="small" *ngIf="sobrenome.errors.required">
+            Sobrenome é obrigatório
+          </div>
+          <div class="small" *ngIf="sobrenome.errors.minlength">
+            Sobrenome deve ter no minimo 3 caracteres
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-6">
         <label>Email:</label>
-        <input class="form-control" type="email" name="email" [(ngModel)]="usuario.email" required/>
+        <input class="form-control" [(ngModel)]="usuario.email" type="email" name="email" required minlength="5"
+          #email="ngModel" />
+        <div class="text-danger text-center" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div class="small" *ngIf="email.errors.required">
+            Email é obrigatório
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-3">
         <label>Telefone:</label>
-        <input class="form-control" type="text" name="telefone" [(ngModel)]="usuario.telefone" required/>
+        <input class="form-control" [(ngModel)]="usuario.telefone" type="text" name="telefone" required
+          #telefone="ngModel" />
+        <div class="text-danger text-center" *ngIf="telefone.invalid && (telefone.dirty || telefone.touched)">
+          <div class="small" *ngIf="telefone.errors.required">
+            Telefone é obrigatório
+          </div>
+        </div>
       </div>
       <div class="form-group col-lg-3">
         <label>Senha:</label>
-        <input class="form-control" type="password" name="senha" [(ngModel)]="usuario.senha" required/>
+        <input class="form-control" [(ngModel)]="usuario.senha" type="password" name="senha" required
+          #senha="ngModel" />
+        <div class="text-danger text-center" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
+          <div class="small" *ngIf="senha.errors.required">
+            Senha é obrigatória
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-row justify-content-center">
       <div class="form-group col-lg-6">
         <label>Data De Nascimento:</label>
-        <input type="date" class="form-control" name="dataNascimento" [(ngModel)]="usuario.dataNascimento"  max="9999-12-31T23:59" required>
+        <input type="date" class="form-control" [(ngModel)]="usuario.dataNascimento" name="dataNascimento"
+          max="9999-12-31" required #dataNascimento="ngModel" />
+        <div class="text-danger text-center"
+          *ngIf="dataNascimento.invalid && (dataNascimento.dirty || dataNascimento.touched)">
+          <div class="small" *ngIf="telefone.errors.required">
+            Data de nascimento é obrigatória
+          </div>
+        </div>
       </div>
     </div>
     <p class="text-center mb-0">Eu sou:</p>
@@ -42,16 +87,33 @@
       <div class="form-group  mb-2 pb-0 col-lg-6">
         <div class="custom-control  mb-0 pb-0 custom-switch">
           <label style="margin-left: 26%;" class="col-sm-3 mb-0 pb-0">Cliente</label>
-          <input type="checkbox" [(ngModel)]="switchPapel" name="switchPapel" class="mb-0 pb-0 custom-control-input" id="customSwitch1">
+          <input type="checkbox" [(ngModel)]="switchPapel" name="switchPapel" class="mb-0 pb-0 custom-control-input"
+            id="customSwitch1">
           <label class="custom-control-label mb-0 pb-0" for="customSwitch1">Organizador</label>
         </div>
       </div>
     </div>
-
-    <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;" class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-6" *ngIf="usuario.id === 0; else alterar" type="submit">Cadastrar Usuario</button>
-    <ng-template #alterar>
-      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;" class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-3" type="submit">Alterar Usuario</button>
-      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px darkred;" class="btn btn-danger mt-0 py-1 col-lg-3" (click)="limpaForm()" type="button">Cancelar</button>
+    <div *ngIf="usuarioForm.valid; else formInvalido">
+      <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;"
+        class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-6" *ngIf="usuario.id === 0; else alterar"
+        type="submit">Cadastrar Usuario</button>
+      <ng-template #alterar>
+        <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px green;"
+          class="offset-lg-3 btn btn-success mt-0 py-1 col-lg-3" type="submit">Alterar Usuario</button>
+        <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px darkred;"
+          class="btn btn-danger mt-0 py-1 col-lg-3" (click)="limpaForm()" type="button">Cancelar</button>
+      </ng-template>
+    </div>
+    <ng-template #formInvalido>
+      <button disabled style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px gray;"
+        class="offset-lg-3 btn btn-secondary mt-0 py-1 col-lg-6" *ngIf="usuario.id === 0; else alterar"
+        type="submit">Cadastrar Usuario</button>
+      <ng-template #alterar>
+        <button disabled style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px gray;"
+          class="offset-lg-3 btn btn-secondary mt-0 py-1 col-lg-3" type="button">Alterar Usuario</button>
+          <button style="box-shadow: 4px 4px gainsboro; text-shadow: 1px 2px darkred;"
+          class="btn btn-danger mt-0 py-1 col-lg-3" (click)="limpaForm()" type="button">Cancelar</button>
+      </ng-template>
     </ng-template>
   </form>
   <hr />
@@ -81,8 +143,12 @@
           <td>{{u.email}}</td>
           <td>{{u.telefone}}</td>
           <td>{{u.papel.nome}}</td>
-          <td class="text-right"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;" (click)="editar(u);" class="btn font-weight-bold btn-warning py-0 px-1">Alterar</a></td>
-          <td class="text-left"><a style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;" (click)="excluir(u.id)" class="btn font-weight-bold btn-danger py-0 px-1">Excluir</a></td>
+          <td class="text-right"><a
+              style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkkhaki;"
+              (click)="editar(u);" class="btn font-weight-bold btn-warning py-0 px-1">Alterar</a></td>
+          <td class="text-left"><a
+              style="border: 2px solid black;box-shadow: 2px 2px gainsboro; text-shadow: 1px 1px 3px darkred;"
+              (click)="excluir(u.id)" class="btn font-weight-bold btn-danger py-0 px-1">Excluir</a></td>
         </tr>
       </tbody>
     </table>
