@@ -6,16 +6,32 @@
       <div class="form-group col-lg-6">
         <label for="nome">Nome:</label>
         <input class="form-control" id="nome" name="nome" [(ngModel)]="evento.nome" #nome="ngModel" required/>
+        <div *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+          <p class="my-0 py-0 text-danger text-center small" *ngIf="nome.errors.required">
+            Nome é obrigatório
+          </p>
+        </div>
       </div>
       <div class="form-group col-lg-6">
         <label for="preco">Preço Ingresso:</label>
-        <input type="number"  class="form-control" id="preco" name="preco" [(ngModel)]="evento.preco" #preco required/>
+        <input type="number"  class="form-control" id="preco" name="preco" [(ngModel)]="evento.preco" #preco="ngModel" required/>
+        <div *ngIf="preco.invalid && (preco.dirty || preco.touched)">
+          <p class="my-0 py-0 text-center text-danger small">Digite um valor valido!</p>
+        </div>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-lg-12">
         <label for="descricao">Descrição:</label>
         <textarea class="form-control" name="descricao" id="descricao" [(ngModel)]="evento.descricao" required minlength="100" #descricao="ngModel"></textarea>
+        <div *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
+          <p *ngIf="descricao.errors.required" class="py-0 my-0 text-danger text-center small">
+            Descrição é obrigatório!
+          </p>
+          <p *ngIf="descricao.errors.minlength" class="py-0 my-0 text-center text-danger small">
+            Sua descrição deve conter ao minimo 100 Caracteres
+          </p>
+        </div>
       </div>
     </div>
     <div class="form-row">
@@ -31,9 +47,12 @@
       </div>
       <div class="form-group col-lg-3">
         <label for="ingressosDisponiveis">Ingressos Disponíveis:</label>
-        <input id="ingressosDisponiveis" class="form-control" name="ingressosDisponiveis" type="number" min=0
+        <input id="ingressosDisponiveis" class="form-control" name="ingressosDisponiveis" type="number" min=1
           [(ngModel)]="evento.quantidadeIngressos" required #quantidadeIngresso="ngModel">
-      </div>
+        <div *ngIf="quantidadeIngresso.invalid && (quantidadeIngresso.dirty || quantidadeIngresso.touched)">
+          <p class="my-0 py-0 text-center text-danger small"> Digite um numero valido!</p>
+        </div>
+        </div>
       <div class="form-group col-lg-3">
         <label for="casaDeShow">Casa De Show:</label>
         <select id="casaDeShow" class="form-control" name="casaDeShow" [(ngModel)]="idCasa" required #casaDeShow="ngModel">
